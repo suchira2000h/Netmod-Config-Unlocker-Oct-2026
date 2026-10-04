@@ -38,6 +38,8 @@ def decrypt_config(text: str) -> str:
     for key in KEYS:
         try:
             result = decrypt_aes_ecb_128(ciphertext, key)
+            if scheme.lower().startswith("nm-"):
+                scheme = scheme[3:]                  # nm-trojan -> trojan
             return f"{scheme}://{result}" if scheme else result
         except (UnicodeDecodeError, ValueError):
             continue
